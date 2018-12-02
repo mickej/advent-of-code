@@ -2,24 +2,19 @@
 
 import sys
 
-def count_duplicates(row):
-    twice = 0
-    thrice = 0
-    for r in row:
-        count = row.count(r)
-        if count == 2 and twice == 0:
-            twice = 1
-        elif count == 3 and thrice == 0:
-            thrice = 1
+def diffed_indices(first, second):
+    return [i for i, c in enumerate(first) if c != second[i]]
 
-    return (twice, thrice)
+def is_secret(first, second):
+    return len(diffed_indices(first, second)) == 1
+
+def to_secret(first, second):
+    diffs = diffed_indices(first, second)
+    return first[:diffs[0]] + first[(diffs[0] + 1):]
+
+def find_secret(rows):
+    secret = [r1 for r1 in rows for r2 in rows if is_secret(r1, r2)]
+    return to_secret(secret[0], secret[1])
 
 rows = sys.stdin.readlines()
-twice = 0
-thrice = 0
-for row in rows:
-    tuple = count_duplicates(row)
-    twice += tuple[0]
-    thrice += tuple[1]
-
-print(twice * thrice)
+print(find_secret(rows))
