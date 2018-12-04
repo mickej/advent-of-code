@@ -20,18 +20,29 @@ def guards_slept(rows):
 
 def find_sleepiest_guard(guards):
     minutes_slept = [(id, sum(guards[id].values())) for id in guards]
-    return max(minutes_slept, key=operator.itemgetter(1))[0]
+    guard_id = max(minutes_slept, key=operator.itemgetter(1))[0]
+    return (guard_id, guards[guard_id])
 
-def find_sleepiest_minute(guard):
-    return max(guard.items(), key=operator.itemgetter(1))[0]
+def find_sleepiest_minute(minutes):
+    return (0, 0) if not minutes.items() else max(minutes.items(), key=operator.itemgetter(1))
 
 def find_minute(minutes_sleeping):
     return max(minutes_sleeping.items(), key=operator.itemgetter(1))[0]
 
+def find_most_frequent_minute(guards):
+    frequent_minute = [(id, find_sleepiest_minute(guards[id])) for id in guards]
+    return max(frequent_minute, key= lambda x: x[1][1])
+
+def strategy1(guards):
+    guard = find_sleepiest_guard(guards)
+    return guard[0] * find_sleepiest_minute(guard[1])[0]
+
+def strategy2(guards):
+    guard = find_most_frequent_minute(guards)
+    return guard[0] * guard[1][0]
+
 rows = sorted(sys.stdin.readlines())
 rows = list(map(lambda r: (r[1:17], r[19:]), rows))
-
 guards = guards_slept(rows)
-guard_id = find_sleepiest_guard(guards)
-print(guard_id * find_sleepiest_minute(guards[guard_id]))
-#print(guard[0] * find_minute(guard[1]))
+print("Strategy1", strategy1(guards))
+print("Strategy2", strategy2(guards))
