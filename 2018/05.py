@@ -15,8 +15,20 @@ def remove_polarities(polymer):
 
     return new_polymer if polymer == new_polymer else remove_polarities(new_polymer)
 
+def remove_units(polymer, unit):
+    units = {unit.lower(), unit.upper()}
+    return ''.join(str(p) for p in polymer if p not in units)
+
+def find_units(polymer):
+    return set([p for p in polymer])
+
 def part1(input):
     print(len(remove_polarities(input)))
 
+def part2(input):
+    units = find_units(input)
+    print(min([len(remove_polarities(remove_units(input, unit))) for unit in units]))
+
 input = sys.stdin.readline()[:-1]
 part1(input)
+part2(input)
