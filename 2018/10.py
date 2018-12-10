@@ -45,7 +45,7 @@ def move_and_print(points, start, end):
     for i in range(end):
         points = move_points(points)
         if i >= start:
-            print("Iteration:", i)
+            print("Second:", i + 1)
             print_points(points)
 
 def part1(points):
