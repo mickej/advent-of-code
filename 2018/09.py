@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys, operator
+import sys, operator, time
 
 def large_enough(seq):
     return len(seq) > 3
@@ -42,7 +42,8 @@ def play(players, last_marble_point):
             current_index = next_index(current_index, marbles)
             marbles.insert(current_index, i)
 
+
     print(max(score.items(), key=operator.itemgetter(1)))
     return marbles
 
-play(473, 70904)
+play(473, 70904 * 100)
