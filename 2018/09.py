@@ -46,4 +46,5 @@ def play(players, last_marble_point):
     print(max(score.items(), key=operator.itemgetter(1)))
     return marbles
 
+play(473, 70904)
 play(473, 70904 * 100)
